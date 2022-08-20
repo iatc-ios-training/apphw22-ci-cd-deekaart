@@ -1,11 +1,11 @@
-name: "Build and Test"
+name: Build and Test
 
-on: 
+on:
   pull_request:
     branches:
       - main
 
-jobs: 
+jobs:
 
   test:
     name: Run on MacOS
@@ -18,7 +18,18 @@ jobs:
 
       - name: Bundle install
         run: bundle install
-      
+        
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install lizard
+        run: pip install lizard
+        
+      - name: Install Sonar scanner
+        run: brew install sonar-scanner
+
       - name: Build and test
         run: |
           bundle exec fastlane test \
